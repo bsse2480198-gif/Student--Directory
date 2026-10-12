@@ -1,0 +1,25 @@
+.student-avatar {
+  background-color: #c4c4c9;
+  height: 160px;
+}
+.student-card {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+.breadcrumb-dark {
+  --bs-breadcrumb-divider-color: #adb5bd;
+}
+.breadcrumb-dark .breadcrumb-item a,
+.breadcrumb-dark .breadcrumb-item.active {
+  color: #fff;
+  text-decoration: none;
+}
+.btn-add {
+  background-color: #12296b;
+  border-color: #12296b;
+  color: #fff;
+}
+.btn-add:hover {
+  background-color: #0d1f52;
+  border-color: #0d1f52;
+  color: #fff;
+}
