@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Routes, Route } from "react-router-dom";
 import AppNavbar from "./components/AppNavbar.jsx";
 import BreadcrumbNav from "./components/BreadcrumbNav.jsx";
 import PageHeader from "./components/PageHeader.jsx";
@@ -6,6 +7,7 @@ import StudentGrid from "./components/StudentGrid.jsx";
 import PaginationBar from "./components/PaginationBar.jsx";
 import AlertBanner from "./components/AlertBanner.jsx";
 import Footer from "./components/Footer.jsx";
+import StudentDetails from "./components/StudentDetails.jsx";
 import { initialStudents } from "./data.js";
 
 const PER_PAGE = 4;
@@ -30,24 +32,32 @@ export default function App() {
     setAlertMsg("Student records have been successfully updated.");
   };
 
-  const handleView = (s) => alert(`${s.name}\nID: ${s.id}\nMajor: ${s.major}\nYear: ${s.year}\nGPA: ${s.gpa}`);
-
   const handleAdd = () => {
     const nextId = Math.max(0, ...students.map((s) => s.id)) + 1;
     setStudents([...students, { id: nextId, name: "New Student", major: "Computer Science", year: 1, gpa: 3.0 }]);
     setAlertMsg("Student records have been successfully updated.");
   };
 
+  const directory = (
+    <>
+      <BreadcrumbNav items={["Home", "Students", "Directory"]} />
+      <PageHeader title="Page Header" buttonText="Add New Student" onButtonClick={handleAdd} />
+      <StudentGrid students={visible} onDelete={handleDelete} />
+      <PaginationBar currentPage={page} totalPages={totalPages} onPageChange={changePage} />
+      {alertMsg && <AlertBanner message={alertMsg} type="info" onClose={() => setAlertMsg("")} />}
+    </>
+  );
+
   return (
     <>
       <AppNavbar brand="StudentPortal" links={["Dashboard", "Students", "Courses", "Reports"]} />
 
       <main className="container">
-        <BreadcrumbNav items={["Home", "Students", "Directory"]} />
-        <PageHeader title="Page Header" buttonText="Add New Student" onButtonClick={handleAdd} />
-        <StudentGrid students={visible} onView={handleView} onDelete={handleDelete} />
-        <PaginationBar currentPage={page} totalPages={totalPages} onPageChange={changePage} />
-        {alertMsg && <AlertBanner message={alertMsg} type="info" onClose={() => setAlertMsg("")} />}
+        <Routes>
+          <Route path="/" element={directory} />
+          <Route path="/directory" element={directory} />
+          <Route path="/students/:id" element={<StudentDetails students={students} />} />
+        </Routes>
       </main>
 
       <Footer

@@ -1,8 +1,10 @@
+import { Link } from "react-router-dom";
+
 export default function AppNavbar({ brand, links }) {
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary">
       <div className="container">
-        <a className="navbar-brand fs-4" href="#">{brand}</a>
+        <Link className="navbar-brand fs-4" to="/">{brand}</Link>
         <button
           className="navbar-toggler"
           type="button"
